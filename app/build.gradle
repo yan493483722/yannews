@@ -1,0 +1,154 @@
+// apply plugin表示该项目会使用指定的插件
+//你应该只配置使用这个android插件。如果同时配置使用了java插件也会导致构建错误。
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+//例如下面这行这里配置使用了Gradle内置的 Java 插件。该插件提供用于构建并测试 Java 应用程序所需要的东西
+//apply plugin: 'java'
+def releaseKey = file('../yanzi.properties') //../返回上一级目录
+// build.gradle文件 有build.gradle文件的详解
+// 注意点:
+// 1. 只需要使用android插件，使用Java插件会报错.
+// 2. 在local.properties中使用sdk.dir属性指定SDK路径，或者你可以使用ANDROID_HOME环境变量。
+
+// android { ... }配置了
+// Android项目构建时需要的所有参数。这是Android DSL的入口。Deep Scattering Layer 深散射层 可以理解为defaultConfig内的属性就是DSL;
+
+// 默认情况下，只需要指定compileSdkVersion和build tools Version，
+// compileSdkVersion指定使用哪个版本的安卓sdk编译，
+// buildToolsVersion指定使用哪个版本的构建工具。
+
+android {
+
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+
+    // defaultConfig元素就是我们用来配置Manifest的地方
+    // build文件中描述的配置可以是动态的，比如可以从文件或者自定义的逻辑中获取版本名称
+    defaultConfig {
+        // ApplicationId 与 PackageName :http://blog.csdn.net/maosidiaoxian/article/details/41719357
+        //出于兼容性原因，如果您没有在您的 build.gradle 文件中定义 applicationId，这个applicationId
+        // 将默认为 AndroidManifest.xml 中所指定的相同的值。
+        // 在这种情况下，这两个显然未解耦，并且如果你试图重构您的代码也将会意外地更改您的应用程序的id
+        // 在 Android Studio 中，新建的项目始终会指定这两个值。
+        // 包名称必须始终在默认 AndroidManifest.xml 文件中指定。
+        // 如果您有多个manifest （例如一个 flavor 的特定的manifest或一个 buildType 的特定的manifest），
+        // 该包名是可选的，但如果它被指定了，它必须和主manifest中指定的包完全相同。
+        applicationId "com.yan.news"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        //不要使用在作用域内可能与已存在的getter函数有冲突的函数名称。不能重名
+        // 例如 defaultConfig { ...} 实例调用 getVersionName() 时
+        // 将自动使用 defaultConfig.getVersionName() 的 getter 方法，而不是自定义的方法。
+        //
+//        versionName computeVersionName()
+
+    }
+    signingConfigs {
+
+        release {
+            if (releaseKey.canRead()) {
+                def Properties versionProps = new Properties()
+                versionProps.load(new FileInputStream(releaseKey))
+                storeFile file(versionProps['RELEASE_STORE_FILE'].toString())
+                storePassword versionProps['RELEASE_STORE_PASSWORD'].toString()
+                keyAlias versionProps['RELEASE_KEY_ALIAS'].toString()
+                keyPassword versionProps['RELEASE_KEY_PASSWORD'].toString()
+            }
+        }
+        debug {
+            storeFile file('../test.jks')//也可以写绝对路径 如下面debug的key
+            storePassword "112233"
+            keyAlias "yan"
+            keyPassword "112233"
+        }
+        preview {
+            storeFile file('F:/YanNews/test.jks')//
+            storePassword "112233"
+            keyAlias "yan"
+            keyPassword "112233"
+        }
+
+    }
+    buildTypes {
+        //必须小写，区分系统的
+        debug {
+            buildConfigField "String", "HOST_NAME", "\"www.baidu.com:\""
+            manifestPlaceholders = [app_label: "@string/app_name_debug"]
+            applicationIdSuffix ".debug" //区分不同的包，也可以定义自己的策略 我举个例子
+            debuggable = true
+            minifyEnabled false
+            shrinkResources false
+            // 这个方法会报错
+            // getResources().getIdentifier(key, “drawable”,getPackageName()));
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        preview {
+            buildConfigField "String", "HOST_NAME", "\"www.baidu.com:\""
+            manifestPlaceholders = [app_label: "@string/app_name_preview"]
+            applicationIdSuffix ".preview"
+            debuggable true // 不保留debug信息
+            // 这个方法会报错
+            // getResources().getIdentifier(key, “drawable”,getPackageName()));
+            minifyEnabled true
+            shrinkResources true
+            //删除无用的图片资源文件 官方不建议删 //只有混淆了   minifyEnabled true 才能开启 shrinkResources
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.preview
+        }
+
+        release {
+            buildConfigField "String", "HOST_NAME", "\"www.baidu.com:\""
+            manifestPlaceholders = [app_label: "@string/app_name"]
+            debuggable false // 不保留debug信息 官方不建议删
+            minifyEnabled true
+            //删除无用的图片资源文件
+//            shrinkResources false
+            // 这个方法会报错
+            // getResources().getIdentifier(key, “drawable”,getPackageName()));
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+    }
+
+
+    productFlavors {
+        one {}
+        two {}
+        three {}
+        productFlavors.all { flavor ->
+            //  flavor -> 可以理解为 遍历
+            flavor.manifestPlaceholders = [CHANNEL_NAME: name]
+        }
+
+    }
+}
+
+
+def computeVersionName() {
+    "1.0"
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    //butter knife
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    //logger
+    compile 'com.github.orhanobut:logger:1.12'
+    //fast json
+    compile 'com.alibaba:fastjson:1.1.48.android'
+    //项目依赖
+    compile project(':changeskin')
+    // v7的包
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    //RxAndroid https://github.com/ReactiveX/RxAndroid
+    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxjava:1.1.5'
+}

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">正式版</string>
+    <string name="app_name_debug">测试版</string>
+    <string name="app_name_preview">正式预览版</string>
+
+    <string name="release_id">com.yan.news</string>
+    <string name="debug_id">com.yan.news.debug</string>
+    <string name="preview_id">com.yan.news.preview</string>
+</resources>
