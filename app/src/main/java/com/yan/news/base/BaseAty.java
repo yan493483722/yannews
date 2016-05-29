@@ -217,7 +217,7 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
     }
 
     private void initNavigationView(){
-        mDrawerLayout=findViewById(R.id.)
+//        mDrawerLayout=findViewById(R.id.)
 //        mDrawerLayout=findViewById(R.id.)
     }
 

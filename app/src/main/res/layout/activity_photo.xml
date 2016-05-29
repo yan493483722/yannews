@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:fitsSystemWindows="true"
-    tools:context=".module.photo.ui.PhotoActivity">
+    android:fitsSystemWindows="true">
     <!--android:background="?attr/colorPrimary"-->
     <!--根布局设置颜色是为了让4.4沉浸式并配合v19\styles.xml做出透明状态栏，侧滑view在导航栏之上不被遮挡的效果，所以其自布局需要设置背景色-->
 
@@ -22,17 +21,17 @@
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <include layout="@layout/include_toolbar"/>
+          <!--  <include layout="@layout/include_toolbar"/>
 
             <include layout="@layout/include_tablayout"/>
-
+-->
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_photo"/>
+     <!--   <include layout="@layout/content_photo"/>-->
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <include layout="@layout/include_navigation_view"/>
+    <!--<include layout="@layout/include_navigation_view"/>-->
 
 </android.support.v4.widget.DrawerLayout>
 
