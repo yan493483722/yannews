@@ -9,6 +9,8 @@ import android.os.StrictMode;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.yan.news.BuildConfig;
 import com.yan.news.R;
@@ -224,13 +226,16 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
     private void initNavigationView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         handleStatusView();
-
+        handleAppBarLayoutOffset();
 //        mDrawerLayout=findViewById(R.id.)
 //        mDrawerLayout=findViewById(R.id.)
     }
 
+
+
     /**
-     * android 4,4以上 将布局延伸到状态栏
+     * android 4.4以上 将布局延伸到状态栏
+     * 关于本部分内容的详细解析可以参考 https://www.zhihu.com/question/31468556
      */
     private void handleStatusView() {
         //针对4.4的状态栏和5.0的沉浸式状态栏不一样 4.4的状态栏不是透明的，5.0的状态栏是透明的
@@ -238,11 +243,35 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && this instanceof SettingsAty) {
             //生成状态栏布局
             View statusBarViews = StatusBarFactory.createStatusBar(mContext, ThemeUtils.getColor(mContext, R.attr.colorPrimary));
-
-            //将布局添加到布局中
-
-
+            //获得具有  弹性的根布局CoordinatorLayout
+            ViewGroup contentLayout = (ViewGroup) mDrawerLayout.getChildAt(0);
+            //将布局添加到布局的第一个中，实现状态栏的添加
+            contentLayout.addView(statusBarViews, 0);
+            View view = contentLayout.getChildAt(1);
+            if (!(contentLayout instanceof LinearLayout) & view != null) {//如果不是LinearLayout 则需要设置，是Linear 就不需要
+                view.setPadding(0, statusBarViews.getHeight(), 0, 0);
+            }
+            ViewGroup drawer= (ViewGroup) mDrawerLayout.getChildAt(1);
+            //使得可布局空间拓展到状态栏
+            mDrawerLayout.setFitsSystemWindows(false);
+            contentLayout.setFitsSystemWindows(false);
+            //可以理解为padding悬浮
+            // http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0317/2613.html
+            contentLayout.setClipToPadding(false);
+            drawer.setFitsSystemWindows(false);
+            //设置界面可以直接换肤，所以要特殊处理
+            if(this instanceof SettingsAty){
+                statusBarViews.setTag("skin:primary:background");
+                view.setTag("skin:primary:background");
+            }
+        }else if(Build.VERSION.SDK_INT>Build.VERSION_CODES.KITKAT){
+            mDrawerLayout.setStatusBarBackgroundColor(ThemeUtils.getColor(mContext, R.attr.colorPrimary));
         }
     }
 
+    /**
+     *
+     */
+    private void handleAppBarLayoutOffset() {
+    }
 }
