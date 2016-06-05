@@ -1,4 +1,4 @@
-package com.yan.news.common;
+package com.yan.news.constant;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

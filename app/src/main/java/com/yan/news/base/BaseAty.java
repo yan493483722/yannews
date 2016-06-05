@@ -3,6 +3,7 @@ package com.yan.news.base;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Observable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.widget.DrawerLayout;
@@ -12,9 +13,11 @@ import android.view.View;
 import com.yan.news.BuildConfig;
 import com.yan.news.R;
 import com.yan.news.annotation.ActivityFragmentInject;
+import com.yan.news.common.StatusBarFactory;
 import com.yan.news.module.news.ui.NewsActivity;
 import com.yan.news.module.setting.ui.SettingsAty;
 import com.yan.news.utils.SpUtil;
+import com.yan.news.utils.ThemeUtils;
 import com.yan.news.widget.slider.model.SliderInterface;
 import com.yan.news.widget.slider.utils.SliderUtil;
 import com.zhy.changeskin.SkinManager;
@@ -95,6 +98,8 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
 
     /**
      * 资源的引用
+     * 因为使用Application-Cntext会出现内存泄露的危险，所以我们一般都是使用Activity-Context。下面就是这两者的使用规则：
+     * 不要让生命周期长的对象引用Activity-Context，保证引用要与Ativity本身生命周期是一样的，对于生命周期长的对象，使用Application-Context 。
      */
     protected Context mContext;
 
@@ -134,7 +139,7 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
         //实例化相关的资源方便调用
         mContext = this;
         mResources = mContext.getResources();
-        if(mHasNavigationView){
+        if (mHasNavigationView) {
             initNavigationView();
         }
 
@@ -158,16 +163,16 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
     protected void onDestroy() {
         super.onDestroy();
         //设置界面
-        if(this instanceof SettingsAty){
+        if (this instanceof SettingsAty) {
             SkinManager.getInstance().unregister(this);
         }
         if (mPresenter != null) {//代理行为的类
             mPresenter.onResume();
         }
         //当前页面是否关闭
-       if(mFinishObservable!=null){
+        if (mFinishObservable != null) {
 
-       }
+        }
 
     }
 
@@ -216,9 +221,28 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
         }
     }
 
-    private void initNavigationView(){
+    private void initNavigationView() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        handleStatusView();
+
 //        mDrawerLayout=findViewById(R.id.)
 //        mDrawerLayout=findViewById(R.id.)
+    }
+
+    /**
+     * android 4,4以上 将布局延伸到状态栏
+     */
+    private void handleStatusView() {
+        //针对4.4的状态栏和5.0的沉浸式状态栏不一样 4.4的状态栏不是透明的，5.0的状态栏是透明的
+        //这里是针对4.4进行的状态栏的处理
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && this instanceof SettingsAty) {
+            //生成状态栏布局
+            View statusBarViews = StatusBarFactory.createStatusBar(mContext, ThemeUtils.getColor(mContext, R.attr.colorPrimary));
+
+            //将布局添加到布局中
+
+
+        }
     }
 
 }

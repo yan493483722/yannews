@@ -21,6 +21,10 @@ import com.yan.news.R;
  */
 public class MyApplication extends Application {
 
+    //Application-Context的生命周期是整个应用， 所以，对于它的使用必须慎重，大部分情况下都要避免使用它，因为它会导致内存泄露的问题。我们先来举个例子：
+    //如果我们现在在一个Activity中引入一个Application-Context，那么，当我们这个Activity关闭的时候，这个Application-Context是不会消失的，因为它的生命周期要比我们的Activity长，
+    //如果只是一些用来计算的数据还好， 但是如果这个Context与我们的Activity的创建有关，或者与我们在Activity要销毁的资源比如图片资源有关，那么，因为我们的Activity或图片就不能正常销毁，
+    //因为它与Application-Context相关联， 如果不能正常的释放掉与它们相关的内存，就会出现所谓的内存泄露的问题。这种问题有时候我们根本无法察觉到，所以我们必须遵守相关的使用原则。
     private static Context mContext;
 
 

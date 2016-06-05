@@ -3,7 +3,7 @@ package com.yan.news.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.yan.news.common.Constants;
+import com.yan.news.constant.Constants;
 import com.yan.news.app.MyApplication;
 
 /**
