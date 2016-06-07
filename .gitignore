@@ -6,3 +6,5 @@
 /build
 /captures
 *.iml
+#  有些文件已经删除了为什么还会出现 ??
+# https://segmentfault.com/q/1010000000430426

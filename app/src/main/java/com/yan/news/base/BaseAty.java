@@ -6,18 +6,23 @@ import android.database.Observable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.orhanobut.logger.Logger;
 import com.yan.news.BuildConfig;
 import com.yan.news.R;
 import com.yan.news.annotation.ActivityFragmentInject;
+import com.yan.news.app.RxBus;
 import com.yan.news.common.StatusBarFactory;
 import com.yan.news.module.news.ui.NewsActivity;
 import com.yan.news.module.setting.ui.SettingsAty;
+import com.yan.news.utils.MeasureUtil;
 import com.yan.news.utils.SpUtil;
 import com.yan.news.utils.ThemeUtils;
 import com.yan.news.widget.slider.model.SliderInterface;
@@ -232,7 +237,6 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
     }
 
 
-
     /**
      * android 4.4以上 将布局延伸到状态栏
      * 关于本部分内容的详细解析可以参考 https://www.zhihu.com/question/31468556
@@ -251,7 +255,7 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
             if (!(contentLayout instanceof LinearLayout) & view != null) {//如果不是LinearLayout 则需要设置，是Linear 就不需要
                 view.setPadding(0, statusBarViews.getHeight(), 0, 0);
             }
-            ViewGroup drawer= (ViewGroup) mDrawerLayout.getChildAt(1);
+            ViewGroup drawer = (ViewGroup) mDrawerLayout.getChildAt(1);
             //使得可布局空间拓展到状态栏
             mDrawerLayout.setFitsSystemWindows(false);
             contentLayout.setFitsSystemWindows(false);
@@ -260,11 +264,11 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
             contentLayout.setClipToPadding(false);
             drawer.setFitsSystemWindows(false);
             //设置界面可以直接换肤，所以要特殊处理
-            if(this instanceof SettingsAty){
+            if (this instanceof SettingsAty) {
                 statusBarViews.setTag("skin:primary:background");
                 view.setTag("skin:primary:background");
             }
-        }else if(Build.VERSION.SDK_INT>Build.VERSION_CODES.KITKAT){
+        } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             mDrawerLayout.setStatusBarBackgroundColor(ThemeUtils.getColor(mContext, R.attr.colorPrimary));
         }
     }
@@ -273,5 +277,30 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
      *
      */
     private void handleAppBarLayoutOffset() {
+        //CoordinatorLayout详细解析
+        //http://www.open-open.com/lib/view/open1437312265428.html#articleHeader3
+        //Snackbar
+        //http://www.jcodecraeer.com/plus/view.php?aid=3187
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (appBarLayout != null && toolbar != null) {
+            final int statusBarHeight = MeasureUtil.getStatusBarHeight(mContext);
+            appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    //instance of
+                    // http://blog.csdn.net/liranke/article/details/5574791
+                    //TODO
+                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT || BaseAty.this instanceof SettingsAty) {
+                        toolbar.setAlpha(verticalOffset / statusBarHeight * 1.0f);
+                        Logger.e(verticalOffset / statusBarHeight * 1.0f + "");
+                    }
+                    //当顶部状态栏没有偏移量时候 告诉底部的fragment是可以进行上下拉刷新操作的
+                    RxBus.getRxbus().post("enableRefreshLayoutOrScrollRecyclerView", verticalOffset == 0);
+                }
+            });
+        }
+
+
     }
 }
