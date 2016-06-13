@@ -2,9 +2,10 @@
 
 //buildscript { ... }配置了驱动构建的代码。
 
+
 buildscript {
 
-    //在这种情况中，它声明了使用 M。
+    //这里配置的是gradle的maven的依赖仓库 一般是编译器使用的
     repositories {
         jcenter()
 
@@ -23,10 +24,15 @@ buildscript {
 }
 
 allprojects {
+    //这里配置的是整个项目的的依赖仓库 一般是给项目和模块使用的
     repositories {
-        //
+        //jcenter 是一个 mavenCentral 的超集，jcenter 还包含了其他 maven 包
         jcenter()
-        maven { url "https://jitpack.io" }
+        //你可以通过 maven { url : xxx }使用任何一个符合 maven 规范的仓库。
+        // 也就是说maven{ url : xxx } 这种类型的maven仓库可以有很多个
+        maven {
+            url "https://jitpack.io"
+        }
 //        maven {
 //            url 'http://mvnrepo.xxx.com/mvn/repository'
 //        }

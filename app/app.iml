@@ -43,6 +43,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/oneDebug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/oneDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/oneDebug/shaders" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/one/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/one/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/one/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/one/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/one/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/one/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/test/one/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOneDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOneDebug/resources" type="java-test-resource" />
@@ -52,12 +58,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testOneDebug/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOneDebug/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOneDebug/shaders" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/androidTest/one/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/androidTest/one/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/androidTest/one/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/androidTest/one/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/androidTest/one/debug" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/resValues/androidTest/one/debug" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/one/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/one/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/one/assets" type="java-resource" />
@@ -66,14 +66,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/one/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/one/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/one/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOne/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOne/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOne/assets" type="java-test-resource" />
@@ -82,6 +74,14 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testOne/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOne/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testOne/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestOne/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
@@ -146,22 +146,22 @@
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="design-23.4.0" level="project" />
-    <orderEntry type="library" exported="" name="logger-1.12" level="project" />
-    <orderEntry type="library" exported="" name="appcompat-v7-23.4.0" level="project" />
-    <orderEntry type="library" exported="" name="ultra-ptr-1.0.11" level="project" />
-    <orderEntry type="library" exported="" name="rxjava-1.1.5" level="project" />
-    <orderEntry type="library" exported="" name="support-vector-drawable-23.4.0" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-23.4.0" level="project" />
-    <orderEntry type="library" exported="" name="fastjson-1.1.48.android" level="project" />
-    <orderEntry type="library" exported="" name="rxandroid-1.2.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
-    <orderEntry type="library" exported="" name="gson-2.6.2" level="project" />
-    <orderEntry type="library" exported="" name="butterknife-8.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.6.2" level="project" />
+    <orderEntry type="library" exported="" name="fastjson-1.1.48.android" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-1.1.5" level="project" />
+    <orderEntry type="library" exported="" name="rxandroid-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="ultra-ptr-1.0.11" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-23.4.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="hamcrest-core-1.3" level="project" />
+    <orderEntry type="library" exported="" name="butterknife-8.0.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-23.4.0" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.0.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
+    <orderEntry type="library" exported="" name="support-vector-drawable-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="appcompat-v7-23.4.0" level="project" />
+    <orderEntry type="library" exported="" name="logger-1.12" level="project" />
     <orderEntry type="module" module-name="changeskin" exported="" />
   </component>
 </module>

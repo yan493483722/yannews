@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,6 +43,15 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity implements BaseView, View.OnClickListener {
 
+    // 先理解几个最基本的
+    //  toolbar  http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1107/1925.html
+    //  主题与toolbar  http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0430/2814.html
+    //  DrawerLayout http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/0925/1713.html
+    //  深度定制的带侧滑删除的toolbar  http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0303/2522.html
+    //  Navigation View  http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0608/3011.html
+
+
+
     /**
      * 代理类的通用行为<处理数据，绑定视图>
      */
@@ -66,6 +76,11 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
      * 侧滑布局
      */
     private DrawerLayout mDrawerLayout;
+
+    /**
+     * 侧滑导航布局
+     */
+    private NavigationView mNavigationView;
 
     /**
      * 菜单栏
@@ -232,6 +247,7 @@ public abstract class BaseAty<T extends BasePresenter> extends AppCompatActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         handleStatusView();
         handleAppBarLayoutOffset();
+      //  mNavigationView = findViewById(R.id.NavigationView)
 //        mDrawerLayout=findViewById(R.id.)
 //        mDrawerLayout=findViewById(R.id.)
     }
